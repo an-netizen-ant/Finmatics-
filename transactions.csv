@@ -1,0 +1,17 @@
+id,date,type,category,amount,currency,description,is_recurring
+1,2026-10-01,income,Salary,25000.00,INR,Monthly stipend and allowance,no
+2,2026-10-02,expense,Transport,120.00,INR,Metro pass and bus fare,no
+3,2026-10-04,expense,Education,800.00,INR,Python programming course books,no
+4,2026-10-05,expense,Food,450.00,INR,Lunch and groceries,no
+5,2026-10-06,expense,Streaming,15.00,USD,Netflix premium subscription,yes
+6,2026-10-08,expense,Snacks,60.00,INR,Evening tea and snacks,no
+7,2026-10-10,expense,Snacks,80.00,INR,Campus coffee stall,no
+8,2026-10-12,expense,Snacks,70.00,INR,Canteen quick bite,no
+9,2026-10-15,expense,Utilities,650.00,INR,High-speed broadband recharge,yes
+10,2026-11-01,income,Salary,25000.00,INR,Monthly stipend,no
+11,2026-11-02,expense,Transport,140.00,INR,Metro smart card,no
+12,2026-11-04,expense,Food,520.00,INR,Weekend groceries,no
+13,2026-11-06,expense,Streaming,15.00,USD,Netflix premium subscription,yes
+14,2026-11-10,expense,Utilities,650.00,INR,High-speed broadband recharge,yes
+15,2026-11-15,expense,Electronics,4500.00,INR,Mechanical keyboard and mouse,no
+16,2026-10-25,expense,Books,350.00,INR,Algorithms textbook,yes
