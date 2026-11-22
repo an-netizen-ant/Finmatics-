@@ -1,4 +1,4 @@
-# Python Expense Tracker & Intelligent Financial Advisory System
+# FinMatrics — Intelligent Multi-Currency Expense Tracker & Financial Advisory System
 ### Computational Thinking and Programming (2026CSAE100) — Bennett University
 **Academic Year:** 2026–27  
 **Team Members:** Samriddhi Jain, Pranjaldeep Kaur, Ashu Kumar, Ansh Vardhan, Anant Gupta
@@ -6,7 +6,7 @@
 ---
 
 ## 📌 Project Overview
-The **Python Expense Tracker & Intelligent Financial Advisory System** elevates traditional personal expense tracking into an active computational advisor. Developed in pure Python using only standard library modules, it features:
+**FinMatrics** elevates traditional personal expense tracking into an intelligent, active computational financial advisor. Developed in pure Python using only standard library modules, it features:
 - **Universal Multi-Currency Engine (Service A):** Offline-first conversion across 7 global currencies (`INR`, `USD`, `EUR`, `GBP`, `JPY`, `AED`, `CAD`).
 - **Surplus Wealth Allocation & SIP Simulator (Service B):** Mathematically partitions unspent funds across Emergency Buffers, Index SIPs, and Upskilling funds, forecasting 1, 3, and 5-year compound growth ($FV$).
 - **50/30/20 Financial Health Scorecard (Service C):** Automatically scores your spending ratio on a 0–100 scale (Needs $\le 50\%$, Wants $\le 30\%$, Savings $\ge 20\%$).

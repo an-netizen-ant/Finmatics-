@@ -21,7 +21,7 @@ from main import (
 
 def run_comprehensive_demo():
     print("=" * 70)
-    print("  PYTHON EXPENSE TRACKER & INTELLIGENT FINANCIAL ADVISORY SYSTEM")
+    print("  FINMATRICS — INTELLIGENT FINANCIAL ADVISORY SYSTEM")
     print("  Comprehensive Demonstration of All Features & Services")
     print("=" * 70)
 

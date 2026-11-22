@@ -1,6 +1,6 @@
 """
 =============================================================================
-Project: Python Expense Tracker & Intelligent Financial Advisory System
+Project: FinMatrics — Intelligent Multi-Currency Expense Tracker & Financial Advisory System
 Course:  Computational Thinking and Programming (2026CSAE100)
 College: Bennett University, School of Computer Science Engineering and Tech
 
@@ -1234,7 +1234,7 @@ def export_monthly_report(transactions: List[Dict[str, Any]]) -> None:
 def display_menu() -> None:
     """Renders the comprehensive CLI options menu."""
     print("\n" + "=" * 65)
-    print("  PYTHON EXPENSE TRACKER & INTELLIGENT FINANCIAL ADVISOR")
+    print("  FINMATRICS — INTELLIGENT FINANCIAL ADVISORY SYSTEM")
     print("  Computational Thinking and Programming (2026CSAE100)")
     print("=" * 65)
     print("--- CORE OPERATIONS ---")
