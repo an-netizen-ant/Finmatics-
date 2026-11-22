@@ -20,14 +20,11 @@
 ## 📂 Repository Structure
 
 ```text
-├── main.py                     # Main interactive application entry point (18 functions)
-├── transactions.csv            # Persistent CSV data storage with multi-currency & recurring flags
-├── test_expense_tracker.py     # 12-test automated unit & integration test suite (unittest)
-├── run_demo.py                 # Automated demonstration script for output captures
-├── monthly_report_2026-10.txt  # Sample comprehensive financial audit report
-├── PROJECT_REPORT_FINAL.md     # Complete project report covering all 10 required sections
-├── VIVA_GUIDE.md               # Comprehensive viva voce preparation guide for all 5 members
-└── README.md                   # Project documentation & run guide
+├── main.py                 # Core application with multi-currency & financial advisory
+├── transactions.csv        # Persistent CSV data storage for transactions
+├── test_expense_tracker.py # Automated test suite (13 unit & integration tests)
+├── README.md               # Project documentation & run guide
+└── .gitignore              # Git ignore rules
 ```
 
 ---
@@ -87,8 +84,6 @@ python3 run_demo.py
 
 ---
 
-## 📖 Evaluation & Viva Preparation
-Review the included **`VIVA_GUIDE.md`** file for:
-- Member-specific question sets and code walkthroughs.
-- Detailed explanations of all algorithms (SIP compounding, 50/30/20 scoring, anomaly detection, currency conversion).
-- Common live code modification challenges with ready-to-run solutions.
+## 📖 Evaluation & Testing
+- Run all automated unit and integration tests with `python3 test_expense_tracker.py`.
+- Includes coverage for multi-currency conversion, SIP compounding calculations, 50/30/20 scoring penalties, and defensive typo-tolerance.

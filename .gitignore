@@ -45,3 +45,12 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+
+# Local student submission documents & helper test harnesses
+VIVA_GUIDE.md
+PROJECT_REPORT_FINAL.md
+GITHUB_SETUP.md
+stress_test.py
+test_cli_runner.py
+run_demo.py
+monthly_report*.txt
