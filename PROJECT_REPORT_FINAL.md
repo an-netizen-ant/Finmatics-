@@ -66,6 +66,7 @@ This application transforms expense tracking from passive record-keeping into an
 | **Service C: 50/30/20 Health Scorecard** | `analyze_50_30_20_health()`, `display_50_30_20_scorecard()` | Evaluates income distribution against standard financial ratios and computes an algorithmic score (0–100) with grade. |
 | **Service D: Leak & Anomaly Detection** | `detect_expense_leaks_and_anomalies()` | Identifies frequent micro-spending (< ₹250) and flags unusual spending spikes ($\ge 2\times$ baseline category average). |
 | **Service F: Recurring Subscription Audit** | `analyze_recurring_subscriptions()` | Tracks recurring monthly commitments (streaming, utilities, gym) and computes monthly and annual cash burn. |
+| **Smart Typo-Tolerant Assistant** | `resolve_smart_menu_choice()`, `normalize_date_input()` | Uses `difflib` similarity algorithms to autocorrect menu options (e.g. `sumary` $\to$ `3`), type aliases (`expnse` $\to$ `expense`), currency typos (`usdd` $\to$ `USD`), and punctuation formatting without crashing. |
 | **Comprehensive Audit Export** | `export_monthly_report()` | Compiles executive summaries, 50/30/20 scores, advisory allocations, and transaction logs into a clean `.txt` report. |
 
 ---
@@ -133,7 +134,7 @@ $$t_i \ge 2.0 \times \left( \frac{\sum_{j \ne i} t_j}{k - 1} \right) \quad \text
 | **Modular Functions** | 18 cohesive functions with typed signatures (`typing.List`, `Dict`, `Tuple`, `Optional`). |
 | **File I/O (`with open`)** | Fault-tolerant reading and writing of `transactions.csv` using `csv.DictReader` / `csv.DictWriter` and `.txt` report export. |
 | **Defensive Exception Handling** | Guarding numeric conversions (`ValueError`), date parsing (`datetime.strptime`), division by zero, and missing file states. |
-| **Standard Libraries** | `csv`, `datetime`, `math` (`math.pow`), `pathlib.Path`, `typing`, `unittest`. |
+| **Standard Libraries** | `csv`, `datetime`, `difflib` (fuzzy typo matching), `math` (`math.pow`), `pathlib.Path`, `typing`, `unittest`. |
 
 ---
 
