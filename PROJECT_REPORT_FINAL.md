@@ -136,24 +136,22 @@ $$t_i \ge 2.0 \times \left( \frac{\sum_{j \ne i} t_j}{k - 1} \right) \quad \text
 | **Defensive Exception Handling** | Guarding numeric conversions (`ValueError`), date parsing (`datetime.strptime`), division by zero, and missing file states. |
 | **Standard Libraries** | `csv`, `datetime`, `difflib` (fuzzy typo matching), `math` (`math.pow`), `pathlib.Path`, `typing`, `unittest`. |
 
-### 5.2 Detailed Function-by-Function Technical Reference
+### 5.2 Core Function Reference (Summary)
 
-| Function Name | Input Parameters | Return Type | Algorithmic Logic & Purpose |
-|:---|:---|:---|:---|
-| `convert_currency` | `amount: float`, `from_curr: str`, `to_curr: str` | `float` | Converts funds between 7 global currencies via base INR conversion matrix. Handles uppercase normalization and falls back safely to original amount if currency code is unrecognized. |
-| `load_transactions` | `filename: str` | `List[Dict[str, Any]]` | Reads `transactions.csv`. Detects whether header exists; if header is missing or corrupted, automatically falls back to positional CSV reading. Fills default values for legacy rows and normalizes amounts to base INR. |
-| `save_transactions` | `transactions: List[Dict]`, `filename: str` | `bool` | Serializes in-memory dictionary list into `transactions.csv` using `csv.DictWriter` with UTF-8 encoding. Returns boolean status indicator. |
-| `resolve_smart_menu_choice` | `raw_input: str` | `Optional[str]` | Normalizes user input; maps natural language keywords (`"invest"` $\to$ `"7"`, `"summary"` $\to$ `"3"`) and uses `difflib.get_close_matches` with a 0.6 cutoff to autocorrect typos (`"sumary"` $\to$ `"3"`). |
-| `normalize_date_input` | `val: str` | `str` | Strips whitespace and normalizes punctuation typos (`"2026/10/05"` or `"2026.10.05"` $\to$ `"2026-10-05"`) and pads single-digit components (`"2026-1-5"` $\to$ `"2026-01-05"`). |
-| `get_validated_type` | `prompt: str` | `str` | Loops with defensive validation until `"income"` or `"expense"` is supplied. Resolves aliases (`"inc"`, `"exp"`, `"salary"`) and fuzzy-matches misspellings without crashing. |
-| `get_validated_currency` | `prompt: str` | `str` | Validates entered currency code. Maps natural currency names (`"dollar"`, `"euro"`, `"rupee"`) and resolves typos (`"usdd"`, `"eruo"`) to ISO currency codes. |
-| `calculate_monthly_summary` | `transactions: List[Dict]`, `target_month: str` | `Dict[str, Any]` | Filters transactions prefixed with `target_month` (`YYYY-MM`). Aggregates total income and expenses, computes net balance, and dynamically ranks categories to find $\arg\max$ spending. |
-| `analyze_50_30_20_health` | `transactions: List[Dict]`, `month_str: str` | `Dict[str, Any]` | Classifies expenses into Needs, Wants, and Savings using set lookups. Computes financial health score (0–100) with mathematical penalty formulas, letter grades, and actionable suggestions. |
-| `calculate_sip_future_value` | `P: float`, `annual_rate: float`, `years: int` | `float` | Evaluates future compound value of monthly investments using the compound interest annuity formula $FV = P \times [\frac{(1+r)^n - 1}{r}] \times (1+r)$. |
-| `generate_wealth_advisory` | `surplus_inr: float`, `risk_profile: str` | `Dict[str, Any]` | Allocates unspent monthly capital across Emergency Buffers, Index SIPs, and Upskilling funds based on risk profile (Conservative, Moderate, Growth). |
-| `detect_expense_leaks_and_anomalies` | `transactions: List[Dict]` | `Dict[str, Any]` | Scans for micro-spending habits ($\le ₹250$ occurring $\ge 3$ times) to compute annual drain, and uses leave-one-out baseline averaging to flag unusual spending spikes $\ge 2\times$ average. |
-| `analyze_recurring_subscriptions` | `transactions: List[Dict]` | `Dict[str, Any]` | Filters recurring commitments (Netflix, broadband, gym) to calculate monthly recurring burn and annualized fixed financial obligations. |
-| `export_monthly_report` | `transactions: List[Dict]` | `None` | Compiles summaries, 50/30/20 scorecard, wealth allocation advisory, and transaction tables into an audit-ready `monthly_report_YYYY-MM.txt` file. |
+| Function | Primary Purpose | Key Logic / Formula |
+|:---|:---|:---|
+| `convert_currency` | 7-currency offline converter | $\text{Base INR} = \text{Amt} / \text{Rate}_{\text{from}}$; $\text{Target} = \text{Base} \times \text{Rate}_{\text{to}}$ |
+| `load_transactions` | Resilient CSV file loading | Self-healing: uses `DictReader` if header exists, else falls back to positional `reader` |
+| `save_transactions` | CSV persistent storage | Writes formatted records to `transactions.csv` |
+| `resolve_smart_menu_choice` | Typo-tolerant menu routing | Matches aliases (`"invest"`, `"subs"`) and fuzzy typos (`"sumary"` $\to$ `"3"`) via `difflib` |
+| `normalize_date_input` | Date punctuation cleaner | Converts `YYYY/MM/DD` or `YYYY-M-D` into standard `YYYY-MM-DD` |
+| `calculate_monthly_summary` | Monthly financial aggregation | Filters by `YYYY-MM`; dynamic category dictionary accumulator + $\arg\max$ sorting |
+| `analyze_50_30_20_health` | Financial health score (0–100) | Calculates Needs ($\le 50\%$), Wants ($\le 30\%$), Savings ($\ge 20\%$) with penalty deductions |
+| `calculate_sip_future_value`| Compound investment growth | $FV = P \times \left[ \frac{(1 + r)^n - 1}{r} \right] \times (1 + r)$ |
+| `generate_wealth_advisory` | Surplus allocation advisor | Divides surplus into Emergency (30%), Index SIP (50%), Skills (20%) |
+| `detect_expense_leaks_and_anomalies` | Pattern & spike detection | Flags micro-spending ($\le ₹250 \times 12 = \text{annual drain}$) & spikes $\ge 2\times$ category history |
+| `analyze_recurring_subscriptions` | Subscription burn audit | Aggregates recurring charges to show monthly & annual committed burn |
+| `export_monthly_report` | Automated text audit export | Writes formatted audit summary to `monthly_report_YYYY-MM.txt` |
 
 ---
 
