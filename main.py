@@ -13,19 +13,18 @@ Team Members & Collaborative Responsibilities:
 =============================================================================
 """
 
+import os
 import csv
 from datetime import datetime
-from pathlib import Path
-from typing import List, Dict, Any, Optional
 
 # =============================================================================
-# CONSTANTS & CONFIGURATION
+# CONSTANTS & CONFIGURATION (Module 1: Variables & Data Types)
 # =============================================================================
 CSV_FILE = "transactions.csv"
 FIELDNAMES = ["id", "date", "type", "category", "amount", "currency", "description"]
 
-# Exchange rates relative to INR (1 Unit of Foreign Currency = X INR)
-EXCHANGE_RATES: Dict[str, float] = {
+# Exchange rates relative to INR (Module 2: Dictionaries)
+EXCHANGE_RATES = {
     "INR": 1.0,
     "USD": 83.33,
     "EUR": 90.91,
@@ -34,7 +33,7 @@ EXCHANGE_RATES: Dict[str, float] = {
     "CAD": 61.35
 }
 
-CURRENCY_SYMBOLS: Dict[str, str] = {
+CURRENCY_SYMBOLS = {
     "INR": "₹",
     "USD": "$",
     "EUR": "€",
@@ -45,17 +44,17 @@ CURRENCY_SYMBOLS: Dict[str, str] = {
 
 
 # =============================================================================
-# MODULE 1: CURRENCY CONVERSION (Pranjaldeep & Anant)
+# MODULE 1: CURRENCY CONVERSION (Module 1: Operators & Arithmetic)
 # =============================================================================
 
-def convert_to_inr(amount: float, currency: str) -> float:
+def convert_to_inr(amount, currency):
     """Converts an amount from a given currency into base INR."""
     curr = currency.upper().strip()
     rate = EXCHANGE_RATES.get(curr, 1.0)
     return round(amount * rate, 2)
 
 
-def convert_currency(amount: float, from_curr: str, to_curr: str) -> float:
+def convert_currency(amount, from_curr, to_curr):
     """Converts an amount from one currency to another using base INR rates."""
     from_curr = from_curr.upper().strip()
     to_curr = to_curr.upper().strip()
@@ -69,28 +68,26 @@ def convert_currency(amount: float, from_curr: str, to_curr: str) -> float:
     return round(target_amount, 2)
 
 
-def get_currency_symbol(curr_code: str) -> str:
+def get_currency_symbol(curr_code):
     """Returns the recognized currency symbol."""
     return CURRENCY_SYMBOLS.get(curr_code.upper().strip(), curr_code.upper().strip())
 
 
 # =============================================================================
-# MODULE 2: CSV STORAGE ENGINE (Pranjaldeep Kaur)
+# MODULE 2: CSV STORAGE ENGINE (Module 4: File Handling & Context Managers)
 # =============================================================================
 
-def load_transactions(filename: str = CSV_FILE) -> List[Dict[str, Any]]:
+def load_transactions(filename=CSV_FILE):
     """Loads all transactions from the CSV file into a list of dictionaries."""
-    file_path = Path(filename)
-    if not file_path.exists():
+    if not os.path.exists(filename):
         return []
 
-    transactions: List[Dict[str, Any]] = []
+    transactions = []
     try:
-        with open(file_path, mode="r", newline="", encoding="utf-8") as file:
+        with open(filename, mode="r", newline="", encoding="utf-8") as file:
             reader = csv.DictReader(file)
             for row in reader:
                 try:
-                    # Clean up keys and values
                     clean_row = {k.strip().lower(): v.strip() for k, v in row.items() if k}
                     
                     trans_id = int(clean_row.get("id", 0))
@@ -124,7 +121,7 @@ def load_transactions(filename: str = CSV_FILE) -> List[Dict[str, Any]]:
     return transactions
 
 
-def save_transactions(transactions: List[Dict[str, Any]], filename: str = CSV_FILE) -> bool:
+def save_transactions(transactions, filename=CSV_FILE):
     """Saves the list of transactions back to the CSV file."""
     try:
         with open(filename, mode="w", newline="", encoding="utf-8") as file:
@@ -145,7 +142,7 @@ def save_transactions(transactions: List[Dict[str, Any]], filename: str = CSV_FI
         return False
 
 
-def get_next_id(transactions: List[Dict[str, Any]]) -> int:
+def get_next_id(transactions):
     """Returns the next sequential unique ID for a new transaction."""
     if not transactions:
         return 1
@@ -153,10 +150,10 @@ def get_next_id(transactions: List[Dict[str, Any]]) -> int:
 
 
 # =============================================================================
-# MODULE 3: INPUT VALIDATION (Samriddhi Jain)
+# MODULE 3: INPUT VALIDATION (Module 2: Loops & Module 4: Exception Handling)
 # =============================================================================
 
-def validate_date(date_str: str) -> bool:
+def validate_date(date_str):
     """Checks if a string is a valid date in YYYY-MM-DD format."""
     try:
         datetime.strptime(date_str.strip(), "%Y-%m-%d")
@@ -165,7 +162,7 @@ def validate_date(date_str: str) -> bool:
         return False
 
 
-def validate_month(month_str: str) -> bool:
+def validate_month(month_str):
     """Checks if a string is a valid month in YYYY-MM format."""
     try:
         datetime.strptime(month_str.strip(), "%Y-%m")
@@ -174,7 +171,7 @@ def validate_month(month_str: str) -> bool:
         return False
 
 
-def get_validated_date(prompt: str = "Date (YYYY-MM-DD, press Enter for today): ") -> str:
+def get_validated_date(prompt="Date (YYYY-MM-DD, press Enter for today): "):
     """Prompts the user until a valid calendar date is provided."""
     while True:
         val = input(prompt).strip()
@@ -185,7 +182,7 @@ def get_validated_date(prompt: str = "Date (YYYY-MM-DD, press Enter for today): 
         print("Invalid date format. Please enter in YYYY-MM-DD format (e.g., 2026-10-15).")
 
 
-def get_validated_type(prompt: str = "Type (income/expense): ") -> str:
+def get_validated_type(prompt="Type (income/expense): "):
     """Prompts the user until either 'income' or 'expense' is entered."""
     while True:
         val = input(prompt).strip().lower()
@@ -194,7 +191,7 @@ def get_validated_type(prompt: str = "Type (income/expense): ") -> str:
         print("Invalid type! Please enter either 'income' or 'expense'.")
 
 
-def get_validated_category(prompt: str = "Category (e.g. Food, Travel, Salary): ") -> str:
+def get_validated_category(prompt="Category (e.g. Food, Travel, Salary): "):
     """Prompts the user for a category name (cannot be empty)."""
     while True:
         cat = input(prompt).strip()
@@ -203,7 +200,7 @@ def get_validated_category(prompt: str = "Category (e.g. Food, Travel, Salary): 
         print("Category cannot be blank. Please enter a valid name.")
 
 
-def get_validated_amount(prompt: str = "Amount: ") -> float:
+def get_validated_amount(prompt="Amount: "):
     """Prompts until a positive numeric amount is entered."""
     while True:
         val = input(prompt).strip()
@@ -216,7 +213,7 @@ def get_validated_amount(prompt: str = "Amount: ") -> float:
             print("Invalid input! Please enter a valid number (e.g., 450.50).")
 
 
-def get_validated_currency(prompt: str = "Currency (INR, USD, EUR, GBP, AED, CAD - Enter for INR): ") -> str:
+def get_validated_currency(prompt="Currency (INR, USD, EUR, GBP, AED, CAD - Enter for INR): "):
     """Prompts for currency code; defaults to INR if left empty."""
     while True:
         curr = input(prompt).strip().upper()
@@ -227,7 +224,7 @@ def get_validated_currency(prompt: str = "Currency (INR, USD, EUR, GBP, AED, CAD
         print(f"Unsupported currency! Available options: {', '.join(EXCHANGE_RATES.keys())}")
 
 
-def get_validated_month(prompt: str = "Month (YYYY-MM, press Enter for current): ") -> str:
+def get_validated_month(prompt="Month (YYYY-MM, press Enter for current): "):
     """Prompts for a month; defaults to current year-month if empty."""
     while True:
         val = input(prompt).strip()
@@ -239,10 +236,10 @@ def get_validated_month(prompt: str = "Month (YYYY-MM, press Enter for current):
 
 
 # =============================================================================
-# MODULE 4: CORE LEDGER OPERATIONS (Samriddhi & Pranjaldeep)
+# MODULE 4: CORE LEDGER OPERATIONS (Module 2: Lists & Dictionaries)
 # =============================================================================
 
-def add_transaction(transactions: List[Dict[str, Any]]) -> None:
+def add_transaction(transactions):
     """Adds a new income or expense transaction."""
     print("\n--- Add New Transaction ---")
     date_str = get_validated_date()
@@ -275,7 +272,7 @@ def add_transaction(transactions: List[Dict[str, Any]]) -> None:
         print("\n[Error] Failed to save transaction to file.")
 
 
-def view_transactions(transactions: List[Dict[str, Any]]) -> None:
+def view_transactions(transactions):
     """Displays all transactions in a clean tabular format."""
     print("\n--- All Recorded Transactions ---")
     if not transactions:
@@ -296,7 +293,7 @@ def view_transactions(transactions: List[Dict[str, Any]]) -> None:
     print(f"Total Transactions: {len(transactions)}")
 
 
-def delete_transaction(transactions: List[Dict[str, Any]]) -> None:
+def delete_transaction(transactions):
     """Deletes a transaction by its unique ID."""
     print("\n--- Delete Transaction ---")
     if not transactions:
@@ -333,10 +330,10 @@ def delete_transaction(transactions: List[Dict[str, Any]]) -> None:
 
 
 # =============================================================================
-# MODULE 5: SEARCH & FILTER (Ansh Vardhan)
+# MODULE 5: SEARCH & FILTER (Module 2: Membership Operators & Loops)
 # =============================================================================
 
-def search_transactions(transactions: List[Dict[str, Any]]) -> None:
+def search_transactions(transactions):
     """Filters transactions by Category or Date."""
     print("\n--- Search & Filter Transactions ---")
     print("1. Search by Category")
@@ -374,16 +371,16 @@ def search_transactions(transactions: List[Dict[str, Any]]) -> None:
 
 
 # =============================================================================
-# MODULE 6: MONTHLY SUMMARY & CALCULATIONS (Ashu Kumar)
+# MODULE 6: MONTHLY SUMMARY & CALCULATIONS (Module 2: List Comprehensions & Dicts)
 # =============================================================================
 
-def calculate_monthly_summary(transactions: List[Dict[str, Any]], target_month: str) -> Dict[str, Any]:
+def calculate_monthly_summary(transactions, target_month):
     """Calculates total income, total expenses, balance, and category totals for a month."""
     month_records = [t for t in transactions if t["date"].startswith(target_month)]
 
     total_income = 0.0
     total_expenses = 0.0
-    category_totals: Dict[str, float] = {}
+    category_totals = {}
 
     for t in month_records:
         amt = t["amount_inr"]
@@ -413,7 +410,7 @@ def calculate_monthly_summary(transactions: List[Dict[str, Any]], target_month: 
     }
 
 
-def display_monthly_summary(transactions: List[Dict[str, Any]]) -> None:
+def display_monthly_summary(transactions):
     """Displays a formatted monthly overview."""
     print("\n--- Monthly Financial Summary ---")
     month_str = get_validated_month()
@@ -442,10 +439,10 @@ def display_monthly_summary(transactions: List[Dict[str, Any]]) -> None:
 
 
 # =============================================================================
-# MODULE 7: BUDGET ALERT CHECKER (Ansh Vardhan)
+# MODULE 7: BUDGET ALERT CHECKER (Module 2: Conditionals if-elif-else)
 # =============================================================================
 
-def check_budget(transactions: List[Dict[str, Any]]) -> None:
+def check_budget(transactions):
     """Compares monthly expenses against a user-defined budget limit."""
     print("\n--- Monthly Budget Check & Alerts ---")
     month_str = get_validated_month()
@@ -475,10 +472,10 @@ def check_budget(transactions: List[Dict[str, Any]]) -> None:
 
 
 # =============================================================================
-# MODULE 8: CURRENCY CONVERTER & EXPORT (Anant Gupta)
+# MODULE 8: CURRENCY CONVERTER & EXPORT (Module 4: File Writing & f-strings)
 # =============================================================================
 
-def interactive_currency_converter() -> None:
+def interactive_currency_converter():
     """Utility to convert between foreign currencies and INR."""
     print("\n--- Currency Quick Converter ---")
     print(f"Available Currencies: {', '.join(EXCHANGE_RATES.keys())}")
@@ -493,7 +490,7 @@ def interactive_currency_converter() -> None:
     print(f"\nResult: {from_sym}{amount:.2f} {from_curr} = {to_sym}{converted:.2f} {to_curr}")
 
 
-def export_monthly_report(transactions: List[Dict[str, Any]]) -> None:
+def export_monthly_report(transactions):
     """Exports a monthly financial summary to a clean text file."""
     print("\n--- Export Monthly Report ---")
     month_str = get_validated_month()
@@ -541,10 +538,10 @@ def export_monthly_report(transactions: List[Dict[str, Any]]) -> None:
 
 
 # =============================================================================
-# MODULE 9: USER INTERFACE & MENU LOOP
+# MODULE 9: USER INTERFACE & MENU LOOP (Module 2: While Loop Menu Dispatch)
 # =============================================================================
 
-def display_menu() -> None:
+def display_menu():
     """Displays the main menu options."""
     print("\n" + "=" * 55)
     print("      FINMATRICS — EXPENSE TRACKER & BUDGET SYSTEM")
@@ -562,7 +559,7 @@ def display_menu() -> None:
     print("-" * 55)
 
 
-def main() -> None:
+def main():
     """Main program execution loop."""
     transactions = load_transactions(CSV_FILE)
 
