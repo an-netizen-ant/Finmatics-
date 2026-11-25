@@ -1,13 +1,13 @@
 # FinMatrics — Personal Expense Tracker & Budget Planner
 
-A console-based personal finance manager built in Python for our **Computational Thinking and Programming (2026CSAE100)** course at **Bennett University**.
+A clean, console-based personal expense manager built in Python for our **Computational Thinking and Programming (2026CSAE100)** course at **Bennett University**.
 
 ---
 
 ## 📌 Overview
-Most basic student expense trackers just add numbers and print them out. We wanted to make something actually useful for students managing their monthly pocket money and hostel expenses. 
+Most student expense trackers are either too basic or overcomplicated. We built **FinMatrics** to be simple, practical, and easy to use for students managing hostel and daily expenses.
 
-**FinMatrics** lets you track daily income and expenses, checks your monthly budget, identifies which category you spent the most on, and gives basic advice on how to save or invest your remaining balance. It also has basic typo-handling so minor spelling mistakes don't crash the program.
+It tracks daily income and expenses, calculates monthly summaries and category breakdowns, alerts you when you exceed your monthly budget, supports basic currency conversion (USD, EUR, GBP to INR), and lets you export monthly reports to text files.
 
 ---
 
@@ -15,44 +15,44 @@ Most basic student expense trackers just add numbers and print them out. We want
 
 | Student Name | Enrollment No. | Contribution / Role |
 |---|---|---|
-| **Samriddhi Jain** | S26CSEU1985 | Menu design, input validation, and 50/30/20 rule calculation |
-| **Pranjaldeep Kaur** | S26CSEU1934 | CSV file storage (`transactions.csv`) and currency conversion |
-| **Ashu Kumar** | S26CSEU1963 | Monthly summaries, category grouping, and SIP investment calculations |
-| **Ansh Vardhan** | S26CSEU1919 | Recurring subscriptions audit, anomaly detection, and test cases |
-| **Anant Gupta** | S26CSEU1940 | Text report export, typo assistance, and code integration |
+| **Samriddhi Jain** | S26CSEU1985 | Menu navigation and input validation (dates, types, positive numbers) |
+| **Pranjaldeep Kaur** | S26CSEU1934 | CSV storage engine (`load_transactions`, `save_transactions`, ID generation) |
+| **Ashu Kumar** | S26CSEU1963 | Monthly summary engine, balance calculation, and category breakdown |
+| **Ansh Vardhan** | S26CSEU1919 | Search & filter (category/date), monthly budget checker, and test cases |
+| **Anant Gupta** | S26CSEU1940 | Report export to text file, currency converter, and system integration |
 
 ---
 
 ## 💡 Key Features
 
-- **Add & View Transactions:** Log expenses and income with date, category, and currency (defaults to INR ₹, but supports USD, EUR, GBP, etc.).
-- **Monthly Summary:** Calculates total income, expenses, net savings, and points out your highest spending category.
-- **Budget Alerts:** Warns you when your spending crosses 85% of your set budget or if you overspend.
-- **50/30/20 Financial Health Score:** Checks whether your spending roughly aligns with 50% Needs, 30% Wants, and 20% Savings.
-- **Savings Advice (SIP & Emergency Fund):** Gives simple suggestions on how to split leftover money into an emergency buffer and long-term savings.
-- **Typo Tolerance:** If you make a small typo (like typing `sumary` instead of `3`, or `usdd` for currency), the program catches it and continues without crashing.
-- **Export Report:** Saves a clean text summary (`monthly_report_YYYY-MM.txt`) to keep offline records.
+- **Add & View Transactions:** Record income and expenses with date, category, amount, currency, and description.
+- **Search & Filter:** Find transactions by category, date, or type (income/expense).
+- **Monthly Summary:** Calculates total income, total expenses, net balance, and finds your highest spending category.
+- **Budget Alerts:** Set a monthly budget and instantly check if your expenses are within limits or overspent.
+- **Currency Conversion:** Supports foreign currencies (USD, EUR, GBP, AED, CAD) with automatic conversion to base INR.
+- **Delete Transactions:** Remove unwanted transactions by ID with confirmation.
+- **Export Report:** Saves a clean, formatted monthly financial report (`monthly_report_YYYY-MM.txt`) for offline records.
 
 ---
 
 ## 🧠 Python Concepts Used
 
-- **Data Structures:** Lists and Dictionaries for holding and grouping transaction records; Sets for fast category lookup.
-- **File Handling:** Using Python's built-in `csv` module to save and load data persistently.
-- **Functions & Modularity:** Program is broken down into small, single-purpose functions.
-- **Control Flow:** `while` loops for the interactive menu and `if-elif-else` conditions for validations.
-- **Error Handling:** `try-except` blocks to handle invalid dates, non-numeric amounts, or corrupted rows safely.
-- **Standard Libraries:** `datetime` (date checking), `math` (compounding math), and `difflib` (typo auto-correction).
+- **Data Structures:** Lists of dictionaries to store transaction records.
+- **File Handling:** Using Python's built-in `csv` module to save and load data persistently, plus file writing for text reports.
+- **Functions & Modularity:** Clean, single-purpose functions for each module.
+- **Control Flow:** `while` loop for menu dispatch and `if-elif-else` branches for options and validation.
+- **Exception Handling:** `try-except ValueError` blocks to reject invalid calendar dates and non-numeric amounts.
+- **Standard Library:** Built entirely with Python standard libraries (`csv`, `datetime`, `pathlib`). Zero third-party packages needed.
 
 ---
 
 ## 📂 Project Structure
 
 ```text
-├── main.py                 # Main program (run this)
-├── transactions.csv        # CSV file storing all transaction records
-├── test_expense_tracker.py # Test file verifying the core functions
-└── README.md               # Project overview and instructions
+├── main.py                 # Main console application
+├── transactions.csv        # CSV file storing persistent records
+├── test_expense_tracker.py # Automated test suite (8 tests)
+└── README.md               # Project documentation
 ```
 
 ---
@@ -65,6 +65,6 @@ Make sure you have Python 3 installed. No external packages are needed.
 # Run the main program
 python3 main.py
 
-# (Optional) Run the test cases
+# Run the test cases
 python3 test_expense_tracker.py
 ```
